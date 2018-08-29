@@ -14,6 +14,7 @@ import (
 var (
 	Token         string
 	commandPrefix string
+	allowedRoles  []string
 )
 
 func init() {

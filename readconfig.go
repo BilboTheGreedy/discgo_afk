@@ -8,8 +8,9 @@ import (
 )
 
 type Config struct {
-	Token  string `json:"login_token"`
-	Prefix string `json:"prefix"`
+	Token  string   `json:"login_token"`
+	Prefix string   `json:"prefix"`
+	Roles  []string `json:"allowed_roles"`
 }
 
 func ReadDiscordConfig() {
@@ -37,5 +38,6 @@ func ReadDiscordConfig() {
 	// we set our discord variables here
 	Token = config.Token
 	commandPrefix = config.Prefix
+	allowedRoles = config.Roles
 
 }
