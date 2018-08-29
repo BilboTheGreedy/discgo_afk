@@ -1,6 +1,8 @@
 package commands
 
-import "github.com/bwmarrin/discordgo"
+import (
+	"github.com/bwmarrin/discordgo"
+)
 
 type commandFunc func(DiscordSession, []string)
 
@@ -21,6 +23,5 @@ func (h Handler) Handle(command string, dcs DiscordSession, fn commandFunc) {
 	if string(h.Command) == command {
 		fn(dcs, h.Args)
 	}
-
 	return
 }

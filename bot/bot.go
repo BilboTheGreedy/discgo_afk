@@ -43,7 +43,12 @@ func messageHandler(session *discordgo.Session, msg *discordgo.MessageCreate) {
 		if msg.Author.ID == config.BotID {
 			return
 		}
+		var rl = config.Roles
 
+		//check if user has permission to interact with bot
+		if checkRole(rl, session, msg) == false {
+			return
+		}
 		dcs := commands.DiscordSession{
 			Msg:     msg,
 			Session: session,
@@ -51,14 +56,16 @@ func messageHandler(session *discordgo.Session, msg *discordgo.MessageCreate) {
 
 		message := strings.TrimPrefix(msg.Content, config.Prefix)
 		messageValues := strings.Split(message, " ")
-		command := messageValues[:1][0]
-		args := messageValues[1:]
-
+		command := messageValues[1]
+		args := messageValues[2:]
+		fmt.Println(args)
 		handler := commands.Handler{
 			Command: command,
 			Args:    args,
 		}
 
 		handler.Handle("help", dcs, commands.Help)
+		handler.Handle("ping", dcs, commands.Ping)
+		handler.Handle("away", dcs, commands.Away)
 	}
 }
