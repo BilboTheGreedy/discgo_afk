@@ -7,7 +7,7 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-func checkRole(s *discordgo.Session, m *discordgo.MessageCreate) bool {
+func checkRole(rl []string, s *discordgo.Session, m *discordgo.MessageCreate) bool {
 
 	d, err := s.Channel(m.ChannelID)
 	if err != nil {
@@ -29,8 +29,8 @@ func checkRole(s *discordgo.Session, m *discordgo.MessageCreate) bool {
 	for _, role := range g.Roles {
 		for _, roleID := range memberRoles {
 			if role.ID == roleID {
-				for _, allowedRole := range allowedRoles {
-					if strings.ToLower(role.Name) == strings.ToLower(allowedRole) {
+				for _, r := range rl {
+					if strings.ToLower(role.Name) == strings.ToLower(r) {
 						fmt.Println(role.Name)
 						return true
 
